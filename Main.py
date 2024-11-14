@@ -5,7 +5,6 @@ config = {
   "host": "luca.ar",
   "database": "dilfar_VideoDB-PCII"
 }
-
 cnx = mysql.connector.connect(**config)
 print ("Conectado: ", cnx.is_connected())
 cnx.close()
