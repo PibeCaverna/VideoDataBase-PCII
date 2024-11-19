@@ -1,10 +1,12 @@
 import mysql.connector
+from utils.kickstart import kickstart
 config = {
-  "user": "dilfar_user",
-  "password": "2024CtrlAltDelete",
+  "user": "dilfar_Notflix",
+  "password": "ZLFyanjnhnvK4v53Whbw",
   "host": "luca.ar",
-  "database": "dilfar_VideoDB-PCII"
+  "database": "dilfar_Notflix"
 }
-cnx = mysql.connector.connect(**config)
-print ("Conectado: ", cnx.is_connected())
-cnx.close()
+conexion = mysql.connector.connect(**config)
+print ("Conectado: ", conexion.is_connected())
+conexion.close()
+
