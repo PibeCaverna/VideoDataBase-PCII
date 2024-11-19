@@ -14,8 +14,9 @@ CREATE TABLE Autenticaciones(
 )
 #
 CREATE TABLE Perfiles(
-	id_peril INT PRIMARY KEY AUTO_INCREMENT,
+	id_perfil INT PRIMARY KEY AUTO_INCREMENT,
 	id_usuario INT NOT NULL,
+	nombre_perfil VARCHAR(20),
 	es_infante BOOLEAN NOT NULL,
 	
 	FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
@@ -23,26 +24,26 @@ CREATE TABLE Perfiles(
 #
 CREATE TABLE Artistas(
 	id_artista INT PRIMARY KEY AUTO_INCREMENT,
-	nombre VARCHAR(20) NOT NULL,
-	apellido VARCHAR(20) NOT NULL,
-	pseudonimo VARCHAR(20)
+	nombre_artista VARCHAR(20) NOT NULL,
+	apellido_artista VARCHAR(20) NOT NULL,
+	pseudonimo_artista VARCHAR(20)
 )
 #
 CREATE TABLE Videos(
-	id_video INT PRIMARY_KEY AUTO_INCREMENT,
-	ubicacion VARCHAR,
-	nombre VARCHAR(20) NOT NULL,
-	descripcion VARCHAR(200)
+	id_video INT PRIMARY KEY AUTO_INCREMENT,
+	ubicacion VARCHAR(100),
+	nombre_video VARCHAR(20) NOT NULL,
+	descripcion_video VARCHAR(200)
 )
 #
 CREATE TABLE Series(
-	id_serie INT PRIMARY_KEY AUTO_INCREMENT,
-	nombre VARCHAR(20) NOT NULL,
-	descripcion VARCHAR(200)
+	id_serie INT PRIMARY KEY AUTO_INCREMENT,
+	nombre_serie VARCHAR(20) NOT NULL,
+	descripcion_serie VARCHAR(200)
 )
 #
 CREATE TABLE Capitulos(
-	id_capitulo INT PRIMARY_KEY,
+	id_capitulo INT PRIMARY KEY,
 	id_serie INT NOT NULL,
 	temporada INT,
 
@@ -51,13 +52,13 @@ CREATE TABLE Capitulos(
 )
 #
 CREATE TABLE Sagas(
-	id_saga INT PRIMARY_KEY AUTO_INCREMENT,
-	nombre VARCHAR(20) NOT NULL,
-	descripcion VARCHAR(200)
+	id_saga INT PRIMARY KEY AUTO_INCREMENT,
+	nombre_saga VARCHAR(20) NOT NULL,
+	descripcion_saga VARCHAR(200)
 )
 #
 CREATE TABLE Peliculas(
-	id_pelicula INT PRIMARY_KEY,
+	id_pelicula INT PRIMARY KEY,
 	id_saga INT,
 
 	FOREIGN KEY (id_pelicula) REFERENCES Videos(id_video),
@@ -69,7 +70,7 @@ CREATE TABLE Progresos(
 	id_video INT,
 	tiempo_progreso TIME,
 
-	PRIMARY KEY id_usuario, id_video,
+	PRIMARY KEY (id_perfil, id_video),
 	FOREIGN KEY (id_perfil) REFERENCES Perfiles(id_perfil),
 	FOREIGN KEY (id_video) REFERENCES Videos(id_video)
 )
