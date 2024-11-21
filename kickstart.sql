@@ -43,11 +43,11 @@ CREATE TABLE Series(
 )
 #
 CREATE TABLE Capitulos(
-	id_capitulo INT PRIMARY KEY,
+	id_video INT PRIMARY KEY,
 	id_serie INT NOT NULL,
 	temporada INT,
 
-	FOREIGN KEY (id_capitulo) REFERENCES Videos(id_video),
+	FOREIGN KEY (id_video) REFERENCES Videos(id_video),
 	FOREIGN KEY (id_serie) REFERENCES Series(id_serie)
 )
 #
@@ -58,10 +58,10 @@ CREATE TABLE Sagas(
 )
 #
 CREATE TABLE Peliculas(
-	id_pelicula INT PRIMARY KEY,
+	id_video INT PRIMARY KEY,
 	id_saga INT,
 
-	FOREIGN KEY (id_pelicula) REFERENCES Videos(id_video),
+	FOREIGN KEY (id_video) REFERENCES Videos(id_video),
 	FOREIGN KEY (id_saga) REFERENCES Sagas(id_saga)
 )
 #

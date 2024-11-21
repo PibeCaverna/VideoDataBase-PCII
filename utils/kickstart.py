@@ -1,5 +1,5 @@
-import mysql.connector
-from mysql.connector.errors import ProgrammingError
+import mysql.connector                                  #Biblioteca para conecta a servers mysql
+from mysql.connector.errors import ProgrammingError     #Error de programación para mysql
 
 def kickstart(conexion):
     ''' Inicia todas las tablas de kickstart.sql, en caso de que no estén iniciadas.
