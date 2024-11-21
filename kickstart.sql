@@ -33,13 +33,15 @@ CREATE TABLE Videos(
 	id_video INT PRIMARY KEY AUTO_INCREMENT,
 	ubicacion VARCHAR(100),
 	nombre_video VARCHAR(20) NOT NULL,
-	descripcion_video VARCHAR(200)
+	descripcion_video VARCHAR(200),
+	atp BOOLEAN NOT NULL
 )
 #
 CREATE TABLE Series(
 	id_serie INT PRIMARY KEY AUTO_INCREMENT,
 	nombre_serie VARCHAR(20) NOT NULL,
-	descripcion_serie VARCHAR(200)
+	descripcion_serie VARCHAR(200),
+	atp BOOLEAN NOT NULL
 )
 #
 CREATE TABLE Capitulos(
