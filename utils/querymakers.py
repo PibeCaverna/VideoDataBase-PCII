@@ -48,7 +48,7 @@ def abouttitle(id,conexion,tipo="g",infante = False):
         query = '''
                 SELECT nombre_serie descripcion_serie count(id_video) as capitulos
                 FROM Series NATURAL JOIN Capitulos
-                WHERE id_serie = '''+id++filtroinfantil'''
+                WHERE id_serie = '''+id++filtroinfantil+'''
                 GROUP BY id_serie
                 '''
         with conexion.cursor() as cursor:
