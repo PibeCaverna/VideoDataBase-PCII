@@ -81,8 +81,40 @@ def abouttitle(id,conexion,tipo="g",infante = False):
                 "desc" : resultado[1],}         #Descripciónd del video
     else: raise ValueError('Argumento de tipo incorrecto')
 
-#def credits(id,conexion,tipo = "g"):
-#    if tipo in ["g","p","c"]:
-#        query = '''
-#                SELECT rol nombre_artista 
-#                '''
+def credits(id,conexion,tipo = "g"):
+    ''' Dada una id para un tipo de contenido admitido, busca todos los créditos que le corresponden
+    en un diccionario de claves Actores, Directores y Productores.
+    los parámetros de tipo "g", "p" y "c" evaluan todos los videos
+    el parámetro de tipo "s" evalua las series
+    otros prámetros de tipo dan error de valor
+    Salida:
+    salida["Actores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista,nombre_personaje)
+    salida["Directores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista)
+    salida["Productores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista)
+    '''
+    creditosretorno = {}
+    if tipo in ["g","p","c"]:
+        query = '''
+                SELECT rol nombre_artista apellido_artista pseudonimo_artista nombre_personaje
+                FROM Creditos NATURAL JOIN Artistas
+                WHERE id_video = '''+id+'''
+                GROUP BY rol
+                '''
+    elif tipo == "s":
+        query = '''
+                SELECT rol nombre_artista apellido_artista pseudonimo_artista nombre_personaje
+                FROM Creditos NATURAL JOIN Artistas NATURAL JOIN Series
+                WHERE id_serie = '''+id+'''
+                GROUB BY rol
+                '''
+    else: raise ValueError('Argumento de tipo incorrecto')
+
+    with conexion.cursor() as cursor:
+        cursor.execute(query)
+        rawcred = cursor.fetchall()
+    for rol in rawcred():
+        if rol[0][0] == "Actor":
+            creditosretorno[rol[0][0]+"es"] = [persona[1:] for persona in rol]
+        else: creditosretorno[rol[0][0]+"es"] = [persona[1:4] for persona in rol]
+
+    return creditosretorno
