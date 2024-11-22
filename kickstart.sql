@@ -1,7 +1,7 @@
 CREATE TABLE Usuarios(
 	id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-	e_mail VARCHAR(20) UNIQUE NOT NULL,
-	password VARCHAR(20) NOT NULL
+	e_mail varchar(255) UNIQUE NOT NULL,
+	password varchar(255) NOT NULL
 )
 #
 CREATE TABLE Autenticaciones(
@@ -16,7 +16,7 @@ CREATE TABLE Autenticaciones(
 CREATE TABLE Perfiles(
 	id_perfil INT PRIMARY KEY AUTO_INCREMENT,
 	id_usuario INT NOT NULL,
-	nombre_perfil VARCHAR(20),
+	nombre_perfil VARCHAR(31),
 	es_infante BOOLEAN NOT NULL,
 	
 	FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
@@ -24,23 +24,23 @@ CREATE TABLE Perfiles(
 #
 CREATE TABLE Artistas(
 	id_artista INT PRIMARY KEY AUTO_INCREMENT,
-	nombre_artista VARCHAR(20) NOT NULL,
-	apellido_artista VARCHAR(20) NOT NULL,
-	pseudonimo_artista VARCHAR(20)
+	nombre_artista varchar(50) NOT NULL,
+	apellido_artista varchar(50) NOT NULL,
+	pseudonimo_artista varchar(50)
 )
 #
 CREATE TABLE Videos(
 	id_video INT PRIMARY KEY AUTO_INCREMENT,
-	ubicacion VARCHAR(100),
-	nombre_video VARCHAR(20) NOT NULL,
-	descripcion_video VARCHAR(200),
+	ubicacion varchar(255),
+	nombre_video varchar(255) NOT NULL,
+	descripcion_video varchar(2047),
 	atp BOOLEAN NOT NULL
 )
 #
 CREATE TABLE Series(
 	id_serie INT PRIMARY KEY AUTO_INCREMENT,
-	nombre_serie VARCHAR(20) NOT NULL,
-	descripcion_serie VARCHAR(200),
+	nombre_serie varchar(255) NOT NULL,
+	descripcion_serie varchar(2047),
 	atp BOOLEAN NOT NULL
 )
 #
@@ -55,8 +55,8 @@ CREATE TABLE Capitulos(
 #
 CREATE TABLE Sagas(
 	id_saga INT PRIMARY KEY AUTO_INCREMENT,
-	nombre_saga VARCHAR(20) NOT NULL,
-	descripcion_saga VARCHAR(200)
+	nombre_saga varchar(255) NOT NULL,
+	descripcion_saga varchar(2047)
 )
 #
 CREATE TABLE Peliculas(
@@ -81,7 +81,7 @@ CREATE TABLE Creditos(
 	id_artista INT NOT NULL,
 	id_video INT NOT NULL,
 	rol SET("Actor","Director","Productor"),
-	nombre_personaje VARCHAR(20),
+	nombre_personaje VARCHAR(255),
 	
 	PRIMARY KEY (id_artista, id_video),
 	FOREIGN KEY (id_artista) REFERENCES Artistas(id_artista),
