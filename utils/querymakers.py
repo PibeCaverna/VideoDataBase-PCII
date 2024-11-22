@@ -81,7 +81,7 @@ def abouttitle(id,conexion,tipo="g",infante = False):
                 "desc" : resultado[1],}         #Descripciónd del video
     else: raise ValueError('Argumento de tipo incorrecto')
 
-def credits(id,conexion,tipo = "g"):
+def creditos(id,conexion,tipo = "g"):
     ''' Dada una id para un tipo de contenido admitido, busca todos los créditos que le corresponden
     en un diccionario de claves Actores, Directores y Productores.
     los parámetros de tipo "g", "p" y "c" evaluan todos los videos

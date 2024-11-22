@@ -9,28 +9,44 @@ def Sign_in(conexion):
     
     return id_user
 
-def Autentification( Email, password,conexion):
 
-    _id, user_password = user_exist( Email,conexion) #si el numbre de usuario existe devuelve el id y la contrasenia del usuario registrado en la tabla
-                                                     #si no existe devuelve false o vacio
-    if user_password = password
-        return _id
+def Autentification(Email,password,conexion):
+    print(Email,password)
+    if(Email != "" and password != ""):
+        tup = user_exist(Email,conexion) #si el numbre de usuario existe devuelve el id y la contrasenia del usuario registrado en la tabla
+                                                         #si no existe devuelve false o vacio
+        if tup is None: raise ValueError('Cuenta inexistente')
+        _id = tup[0]
+        user_password = tup[1]
+        query = ''' 
+                INSERT
+                INTO Autenticaciones(id_usuario,success)
+                VALUES (%s,%s)
+                '''
+        if user_password == password:
+            with conexion.cursor() as cursor:
+                cursor.execute(query,(_id,True))
+            return _id
+        else:
+            with conexion.cursor() as cursor:
+                cursor.execute(query,(_id,False))
+            return None
 
-    #falta lanzar una exepcion si la contrasenia no corresponde y agregar la hora del intento de logeo, si fue exitoso o fallido,
-    # y aumntar ek numero de intentos de logeos a la cuenta
-
-def user_exist( Email,conexion):#hace la quary en la lista de usuarios y consigue la id de ese usuario y su contrasenia
-                               #si el usuario no existe lanza una exepcion
-    consulta = """Select id_usuario, password
-                  From Usuarios 
-                  Where E_mail = %s"""
-
+def user_exist(Email,conexion):#hace la quary en la lista de usuarios y consigue la id de ese usuario y su contrasenia
+    consulta =  '''
+                SELECT id_usuario password
+                FROM Usuarios
+                Where e_mail = '''+"\'"+Email+"\'"
     with conexion.cursor() as cursor:
-        cursor.execute(consulta , Email)
+        print("punto")
+        cursor.execute(consulta)
+        tup = cursor.fetchone()
+    return tup
+
+def UIlogin(Mail,Pass,conexion):
+    '''Corre la función Autentification, de forma tal que se pueda procesar con un botón de tkinter'''
+    try: resultado = Autentification(Mail,Pass,conexion)
+    except ValueError: return("Error: No existe el usuario")
+    if resultado is None: return("Error, Contraseña incorrecta")
+    else: return resultado
     
-    return cursor.fetchone()
-
-
-
-
-
