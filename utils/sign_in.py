@@ -11,7 +11,6 @@ def Sign_in(conexion):
 
 
 def Autentification(Email,password,conexion):
-    print(Email,password)
     if(Email != "" and password != ""):
         tup = user_exist(Email,conexion) #si el numbre de usuario existe devuelve el id y la contrasenia del usuario registrado en la tabla
                                                          #si no existe devuelve false o vacio
@@ -38,7 +37,6 @@ def user_exist(Email,conexion):#hace la quary en la lista de usuarios y consigue
                 FROM Usuarios
                 Where e_mail = '''+"\'"+Email+"\'"
     with conexion.cursor() as cursor:
-        print("punto")
         cursor.execute(consulta)
         tup = cursor.fetchone()
     return tup
