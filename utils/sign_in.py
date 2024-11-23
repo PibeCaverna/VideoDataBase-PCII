@@ -33,7 +33,7 @@ def Autentification(Email,password,conexion):
 
 def user_exist(Email,conexion):#hace la quary en la lista de usuarios y consigue la id de ese usuario y su contrasenia
     consulta =  '''
-                SELECT id_usuario password
+                SELECT id_usuario, password
                 FROM Usuarios
                 Where e_mail = '''+"\'"+Email+"\'"
     with conexion.cursor() as cursor:
