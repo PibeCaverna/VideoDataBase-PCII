@@ -22,13 +22,13 @@ def Autentification(Email,password,conexion):
                 INTO Autenticaciones(id_usuario,success)
                 VALUES (%s,%s)
                 '''
-        if user_password == password:
+        if user_password == password:               #Si el logeo es exitoso
             with conexion.cursor() as cursor:
-                cursor.execute(query,(_id,True))
+                cursor.execute(query,(_id,True))    #guardo la auth como correcta
             return _id
-        else:
-            with conexion.cursor() as cursor:
-                cursor.execute(query,(_id,False))
+        else:                                       #Si el logeo no es exitoso
+            with conexion.cursor() as cursor:       
+                cursor.execute(query,(_id,False))   #guardo la auth como incorrecta
             return None
 
 def user_exist(Email,conexion):#hace la quary en la lista de usuarios y consigue la id de ese usuario y su contrasenia
