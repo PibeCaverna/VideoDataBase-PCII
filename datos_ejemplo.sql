@@ -166,6 +166,20 @@ INSERT INTO `Series` VALUES (3,'Funny Pets','Una divertida serie animada sobre l
 
 
 
+INSERT INTO `Capitulos` VALUES (17,1,1,1);
+INSERT INTO `Capitulos` VALUES (18,1,2,1);
+INSERT INTO `Capitulos` VALUES (19,1,1,2);
+
+INSERT INTO `Capitulos` VALUES (20,2,1,1);
+INSERT INTO `Capitulos` VALUES (21,2,2,1);
+INSERT INTO `Capitulos` VALUES (22,2,1,2);
+
+INSERT INTO `Capitulos` VALUES (23,3,1,1);
+INSERT INTO `Capitulos` VALUES (24,3,2,1);
+INSERT INTO `Capitulos` VALUES (25,3,1,2);
+
+
+
 
 
 
