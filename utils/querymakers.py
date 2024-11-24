@@ -34,7 +34,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
     if infante == 1: filtroinfantil = " atp = 1"
     if tipo == "p":
         query = '''
-                SELECT nombre_video descripcion_video nombre_saga descripcion_saga 
+                SELECT nombre_video, descripcion_video, nombre_saga, descripcion_saga 
                 FROM Videos  NATURAL JOIN Peliculas NATURAL JOIN Sagas
                 WHERE id_video = '''+id+filtroinfantil
         with conexion.cursor() as cursor:
@@ -46,7 +46,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
                 "sagadata" : resultado[3]}      #Descripción de la saga
     elif tipo == "s":
         query = '''
-                SELECT nombre_serie descripcion_serie count(id_video) as capitulos
+                SELECT nombre_serie, descripcion_serie, count(id_video) as capitulos
                 FROM Series NATURAL JOIN Capitulos
                 WHERE id_serie = '''+id++filtroinfantil+'''
                 GROUP BY id_serie
@@ -59,7 +59,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
                 "qcap" : resultado[2],}         #Cantidad de cápitulos de la serie
     elif tipo == "c":
         query = '''
-                SELECT nombre_video descripcion_video temporada nombre_serie
+                SELECT nombre_video, descripcion_video, temporada, nombre_serie
                 FROM Videos NATURAL JOIN Capitulos NATURAL JOIN Series
                 WHERE id_video = '''+id+filtroinfantil
         with conexion.cursor() as cursor:
@@ -71,7 +71,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
                 "s" : resultado[3]}             #Serie del cápitulo
     elif tipo == "g":
         query = '''
-                SELECT nombre_video descripcion_video
+                SELECT nombre_video, descripcion_video
                 FROM Videos
                 WHERE id_video = '''+id+filtroinfantil
         with conexion.cursor() as cursor:
@@ -95,14 +95,14 @@ def creditos(id,conexion,tipo = "g"):
     creditosretorno = {}
     if tipo in ["g","p","c"]:
         query = '''
-                SELECT rol nombre_artista apellido_artista pseudonimo_artista nombre_personaje
+                SELECT rol, nombre_artista, apellido_artista, pseudonimo_artista, nombre_personaje
                 FROM Creditos NATURAL JOIN Artistas
                 WHERE id_video = '''+id+'''
                 GROUP BY rol
                 '''
     elif tipo == "s":
         query = '''
-                SELECT rol nombre_artista apellido_artista pseudonimo_artista nombre_personaje
+                SELECT rol, nombre_artista, apellido_artista, pseudonimo_artista, nombre_personaje
                 FROM Creditos NATURAL JOIN Artistas NATURAL JOIN Series
                 WHERE id_serie = '''+id+'''
                 GROUB BY rol
