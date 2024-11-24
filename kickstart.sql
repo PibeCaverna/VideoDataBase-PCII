@@ -47,6 +47,7 @@ CREATE TABLE Series(
 CREATE TABLE Capitulos(
 	id_video INT PRIMARY KEY,
 	id_serie INT NOT NULL,
+  num_capitulo INT NOT NULL,
 	temporada INT,
 
 	FOREIGN KEY (id_video) REFERENCES Videos(id_video),
