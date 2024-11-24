@@ -1,10 +1,10 @@
 import mysql.connector                              #biblioteca para conectar a servers mysql
 
-def searchtitles(cadena,conexion, infante = False):
+def searchtitles(cadena,conexion, infante = 0):
     '''Dada una cadena, retorna un diccionario de ids de series o peliculas cuyo título la contiene
     Estructura -> {"movie" : <ids peliculas>, "serial" : <ids series>}'''
     filtroinfantil = ""
-    if infante: filtroinfantil = " atp = True"
+    if infante == 1: filtroinfantil = " atp = 1"
     moviequery ='''
                 SELECT id_video
                 FROM Videos NATURAL JOIN Peliculas
@@ -22,7 +22,7 @@ def searchtitles(cadena,conexion, infante = False):
     return {"m" : m,
             "s" : s}
 
-def abouttitle(id,conexion,tipo="g",infante = False):
+def abouttitle(id,conexion,tipo="g",infante = 0):
     '''dada una id, retorna un diccionario con toda la información relevante al tipo seleccionado
         TIPOS
             | g -> Genérico. nombre, descripcion 
@@ -31,7 +31,7 @@ def abouttitle(id,conexion,tipo="g",infante = False):
             | c -> Cápitulo. agrega serie y temporada 
     '''
     filtroinfantil = ""
-    if infante: filtroinfantil = " atp = True"
+    if infante == 1: filtroinfantil = " atp = 1"
     if tipo == "p":
         query = '''
                 SELECT nombre_video descripcion_video nombre_saga descripcion_saga 
