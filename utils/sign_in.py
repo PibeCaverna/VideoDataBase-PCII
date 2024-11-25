@@ -54,14 +54,4 @@ def fetchprofiles(id, conexion):
         out.append((None,"Nuevo Usuario",1))
     return out
 
-def UIlogin(Mail,Pass,Perfiles,conexion,currentframe,nextframe):
-    '''Corre la función Autentification, de forma tal que se pueda procesar con un botón de tkinter'''
-    try: resultado = Autentification(Mail,Pass,conexion)
-    except ValueError: return("Error: No existe el usuario")
-    if resultado is None: return("Error, Contraseña incorrecta")
-    else:
-        Perfiles = fetchprofiles(resultado,conexion)
-        currentframe.pack_forget()
-        nextframe.pack()
-        return resultado
     
