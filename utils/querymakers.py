@@ -4,7 +4,7 @@ def searchtitles(cadena,conexion, infante = 0):
     '''Dada una cadena, retorna un diccionario de ids de series o peliculas cuyo título la contiene
     Estructura -> {"movie" : <ids peliculas>, "serial" : <ids series>}'''
     filtroinfantil = ""
-    if infante == 1: filtroinfantil = " atp = 1"
+    if infante == 1: filtroinfantil = " AND atp = 1"
     moviequery ='''
                 SELECT id_video
                 FROM Videos NATURAL JOIN Peliculas
