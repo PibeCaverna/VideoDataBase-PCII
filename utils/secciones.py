@@ -11,12 +11,12 @@ def Get_videos_no_finalizados(id_profile,conexion):
 
     #obtengo todas las peliculas sin terminar
     consulta_pelis = """Select id_video 
-                  From Videos V, Perfiles Pe, Peliculas M, Progresos Pr  
-                  Where %s = Pr.id_perfil and Pr.id_video = V.id_video and and V.id_video = M.id_video and Pr.progreso < 100 and Pr.progreso > 0"""
+                        From Videos V, Perfiles Pe, Peliculas M, Progresos Pr  
+                        Where %s = Pr.id_perfil and Pr.id_video = V.id_video and and V.id_video = M.id_video and Pr.tiempo_progreso < 100 and Pr.tiempo_progreso > 0"""
     #obtengo todas las series de las que todabia falta terminar algun capitulo
     consulta_cap_por_terminar = """Select id_Series
-                  From Videos V, Perfiles Pe, Capitulos C, Progresos Pr, Series S  
-                  Where %s = Pr.id_perfil and Pr.id_video = V.id_video and V.id_video = C.id_video and C.id_serie = S.id_serie and Pr.progreso < 100 and Pr.progreso > 0"""
+                                    From Videos V, Perfiles Pe, Capitulos C, Progresos Pr, Series S  
+                                    Where %s = Pr.id_perfil and Pr.id_video = V.id_video and V.id_video = C.id_video and C.id_serie = S.id_serie and Pr.tiempo_progreso < 100 and Pr.tiempo_progreso > 0"""
     #devuelve las id de todas las series vistas
     consulta_serie_por_terminar = """Select Distinct id_Series
                   From Videos V, Perfiles Pe, Capitulos C, Progresos Pr, Series S  
@@ -69,9 +69,9 @@ def get_pelis_name(id_pelis, conexion):
 
 def get_series_name(id_series, conexion):
 
-    consulta = """Select nombre_serie
-                  From  Series 
-                  Where %s = id_serie
+    consulta = """SELECT nombre_serie
+                  FROM  Series 
+                  WHERE %s = id_serie
                 """
 
     names = []
