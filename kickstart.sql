@@ -71,7 +71,7 @@ CREATE TABLE Peliculas(
 CREATE TABLE Progresos(
 	id_perfil INT,
 	id_video INT,
-	tiempo_progreso TIME,
+	progreso INT,
 
 	PRIMARY KEY (id_perfil, id_video),
 	FOREIGN KEY (id_perfil) REFERENCES Perfiles(id_perfil),
