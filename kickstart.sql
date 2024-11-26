@@ -41,13 +41,14 @@ CREATE TABLE Series(
 	id_serie INT PRIMARY KEY AUTO_INCREMENT,
 	nombre_serie varchar(255) NOT NULL,
 	descripcion_serie varchar(2047),
-	atp BOOLEAN NOT NULL
+	atp BOOLEAN NOT NULL,
+	fecha_agreg_serie DATE NOT NULL
 )
 #
 CREATE TABLE Capitulos(
 	id_video INT PRIMARY KEY,
 	id_serie INT NOT NULL,
-  num_capitulo INT NOT NULL,
+  	num_capitulo INT NOT NULL,
 	temporada INT,
 
 	FOREIGN KEY (id_video) REFERENCES Videos(id_video),
@@ -63,6 +64,7 @@ CREATE TABLE Sagas(
 CREATE TABLE Peliculas(
 	id_video INT PRIMARY KEY,
 	id_saga INT,
+	fecha_agreg_peli DATE NOT NULL,
 
 	FOREIGN KEY (id_video) REFERENCES Videos(id_video),
 	FOREIGN KEY (id_saga) REFERENCES Sagas(id_saga)
