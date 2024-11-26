@@ -36,49 +36,49 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
         query = '''
                 SELECT nombre_video, descripcion_video, nombre_saga, descripcion_saga 
                 FROM Videos  NATURAL JOIN Peliculas NATURAL JOIN Sagas
-                WHERE id_video = '''+id+filtroinfantil
+                WHERE id_video = '''+str(id)+filtroinfantil
         with conexion.cursor() as cursor:
             cursor.execute(query)
             resultado = cursor.fetchall()
-        return {"title" : resultado[0],         #Título de la peli
-                "desc" : resultado[1],          #Descripción de la peli
-                "saga" : resultado[2],          #Saga de la peli
-                "sagadata" : resultado[3]}      #Descripción de la saga
+        return {"title" : resultado[0][0],         #Título de la peli
+                "desc" : resultado[0][1],          #Descripción de la peli
+                "saga" : resultado[0][2],          #Saga de la peli
+                "sagadata" : resultado[0][3]}      #Descripción de la saga
     elif tipo == "s":
         query = '''
                 SELECT nombre_serie, descripcion_serie, count(id_video) as capitulos
                 FROM Series NATURAL JOIN Capitulos
-                WHERE id_serie = '''+id++filtroinfantil+'''
+                WHERE id_serie = '''+str(id)+filtroinfantil+'''
                 GROUP BY id_serie
                 '''
         with conexion.cursor() as cursor:
             cursor.execute(query)
             resultado = cursor.fetchall()
-        return {"title" : resultado[0],         #Título de la serie
-                "desc" : resultado[1],          #Descripción de la serie
-                "qcap" : resultado[2],}         #Cantidad de cápitulos de la serie
+        return {"title" : resultado[0][0],         #Título de la serie
+                "desc" : resultado[0][1],          #Descripción de la serie
+                "qcap" : resultado[0][2],}         #Cantidad de cápitulos de la serie
     elif tipo == "c":
         query = '''
                 SELECT nombre_video, descripcion_video, temporada, nombre_serie
                 FROM Videos NATURAL JOIN Capitulos NATURAL JOIN Series
-                WHERE id_video = '''+id+filtroinfantil
+                WHERE id_video = '''+str(id)+filtroinfantil
         with conexion.cursor() as cursor:
             cursor.execute(query)
             resultado = cursor.fetchall()
-        return {"title" : resultado[0],         #Titulo del cápitulo
-                "desc" : resultado[1],          #Descripción del cápitulo
-                "season" : resultado[2],        #Temporada del cápitulo
-                "s" : resultado[3]}             #Serie del cápitulo
+        return {"title" : resultado[0][0],         #Titulo del cápitulo
+                "desc" : resultado[0][1],          #Descripción del cápitulo
+                "season" : resultado[0][2],        #Temporada del cápitulo
+                "s" : resultado[0][3]}             #Serie del cápitulo
     elif tipo == "g":
         query = '''
                 SELECT nombre_video, descripcion_video
                 FROM Videos
-                WHERE id_video = '''+id+filtroinfantil
+                WHERE id_video = '''+str(id)+filtroinfantil
         with conexion.cursor() as cursor:
             cursor.execute(query)
             resultado = cursor.fetchall()
-        return {"title" : resultado[0],         #Título del video
-                "desc" : resultado[1],}         #Descripciónd del video
+        return {"title" : resultado[0][0],         #Título del video
+                "desc" : resultado[0][1],}         #Descripciónd del video
     else: raise ValueError('Argumento de tipo incorrecto')
 
 def creditos(id,conexion,tipo = "g"):
