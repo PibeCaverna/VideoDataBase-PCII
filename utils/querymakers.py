@@ -31,7 +31,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
             | c -> Cápitulo. agrega serie y temporada 
     '''
     filtroinfantil = ""
-    if infante == 1: filtroinfantil = " atp = 1"
+    if infante == 1: filtroinfantil = " AND atp = 1"
     if tipo == "p":
         query = '''
                 SELECT nombre_video, descripcion_video, nombre_saga, descripcion_saga 
