@@ -122,35 +122,36 @@ VALUES
 (3, 'Thor', 'Las aventuras del dios del trueno Thor.'),
 (4, 'X-Men', 'Una saga sobre los mutantes que luchan por la aceptación en el mundo.'),
 (5, 'Star Wars', 'La lucha épica entre la rebelión y el imperio en una galaxia lejana.');
+(6, 'Spider-Man', 'La original')
 
 
 
 INSERT INTO Peliculas 
 VALUES 
-(16, 6),
-(1, 1),
-(2, 1),
-(3, 1),
-(12, 1),
-(4, 2),
-(5, 2),
-(13, 2),
-(6, 3),
-(7, 3),
-(14, 3),
-(8, 4),
-(15, 4),
-(9, 5),
-(10, 5),
-(11, 5);
+(16, 6, '2001-09-11'),
+(1, 1, '2020-06-08'),
+(2, 1, '2020-06-08'),
+(3, 1, '2020-06-08'),
+(12, 1, '2020-06-08'),
+(4, 2, '2020-06-08'),
+(5, 2, '2020-06-08'),
+(13, 2, '2020-06-08'),
+(6, 3, '2020-06-08'),
+(7, 3, '2020-06-08'),
+(14, 3, '2024-11-26'),
+(8, 4, '2024-11-26'),
+(15, 4, '2024-11-26'),
+(9, 5, '2024-11-26'),
+(10, 5, '2023-10-15'),
+(11, 5, '2022-06-26');
 
 
 
 INSERT INTO `Series` 
 VALUES 
-(1, 'The Cosmic Adventures', 'Una serie que explora los misterios del universo con un equipo de científicos.', 1),
-(2, 'Dark Chronicles', 'Una serie de drama y misterio que sigue los secretos de un pueblo.', 0),
-(3, 'Funny Pets', 'Una divertida serie animada sobre las aventuras de mascotas parlantes.', 1);
+(1, 'The Cosmic Adventures', 'Una serie que explora los misterios del universo con un equipo de científicos.', 1, '2024-11-26'),
+(2, 'Dark Chronicles', 'Una serie de drama y misterio que sigue los secretos de un pueblo.', 0, '2020-08-01'),
+(3, 'Funny Pets', 'Una divertida serie animada sobre las aventuras de mascotas parlantes.', 1, '2001-01-11');
 
 
 
