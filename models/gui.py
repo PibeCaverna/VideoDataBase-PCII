@@ -15,14 +15,19 @@ class InterfazUsuario:
     def __init__(self,conexion):
         #Ventana principal
         self._VentanaRaiz   = Tk()
-
+        self._VentanaRaiz.geometry("800x600")
+        #Datos a usar
+        self._incompleteseries = []
+        self._incompletemovies = []
+        self._currentProfile = None
+        self._esinfante = None
         #Frames a usar
         self._FrameLogin    = Frame()
         self._FrameUselect  = Frame()
         self._PFrame        = Frame()   #Frame Padre a la UI del servicio
-        self._FrameSearch   = LabelFrame(self._PFrame,text="Buscador",relief="sunken")
-        self._FrameMpage    = LabelFrame(self._PFrame,text="Inicio",relief="solid")
-        self._FrameData     = LabelFrame(self._PFrame,text="Descripción",relief="sunken")
+        self._FrameSearch   = LabelFrame(self._PFrame,width=400,height=300,relief="sunken",font=("Arial",30,"bold"),text="Busqueda")
+        self._FrameMpage    = LabelFrame(self._PFrame,width=400,height=300,relief="solid" ,font=("Arial",30,"bold"),text="Inicio")
+        self._FrameData     = LabelFrame(self._PFrame,width=800,height=300,relief="sunken",font=("Arial",30,"bold"),text="Detalles")
         #la conexion
         self._conexion      = conexion
         #widgets
@@ -35,6 +40,9 @@ class InterfazUsuario:
                                         text="Ingresar",
                                         command=self.LoginHandler,
                                         font=("Arial",16,"bold")))
+        self.UselectWidget = ()
+        self.MenuWidgets = ()
+        self.SearchWidgets = ()
 
     def startgui(self):
         self._logwidgets[0].grid(row=0,column=0)
@@ -55,7 +63,7 @@ class InterfazUsuario:
         if resultado is None: messagebox.showinfo("Error", "Contraseña incorrecta")
         else:
             Perfiles = fetchprofiles(resultado,self._conexion)
-            UselectWidget = (
+            self.UselectWidget = (
                              Label(self._FrameUselect,justify="center",text="Seleccione su Usuario",font=("Arial",30,"bold")),
                              Button(self._FrameUselect,text=Perfiles[0][1],font=("Arial",20,"bold"),command=(lambda: self.pfp(Perfiles[0][0],Perfiles[0][0]))),
                              Button(self._FrameUselect,text=Perfiles[1][1],font=("Arial",20,"bold"),command=(lambda: self.pfp(Perfiles[1][0],Perfiles[1][0]))),
@@ -64,13 +72,13 @@ class InterfazUsuario:
                              Button(self._FrameUselect,text=Perfiles[4][1],font=("Arial",20,"bold"),command=(lambda: self.pfp(Perfiles[4][0],Perfiles[4][0]))),
                              Button(self._FrameUselect,text=Perfiles[5][1],font=("Arial",20,"bold"),command=(lambda: self.pfp(Perfiles[5][0],Perfiles[5][0])))
                             )
-            UselectWidget[0].grid(row=0,column=0,columnspan=2)
-            UselectWidget[1].grid(row=1,column=0)
-            UselectWidget[2].grid(row=1,column=1)
-            UselectWidget[3].grid(row=2,column=0)
-            UselectWidget[4].grid(row=2,column=1)
-            UselectWidget[5].grid(row=3,column=0)
-            UselectWidget[6].grid(row=3,column=1)
+            self.UselectWidget[0].grid(row=0,column=0,columnspan=2)
+            self.UselectWidget[1].grid(row=1,column=0)
+            self.UselectWidget[2].grid(row=1,column=1)
+            self.UselectWidget[3].grid(row=2,column=0)
+            self.UselectWidget[4].grid(row=2,column=1)
+            self.UselectWidget[5].grid(row=3,column=0)
+            self.UselectWidget[6].grid(row=3,column=1)
             
             self._FrameLogin.pack_forget()
             self._FrameUselect.pack()
@@ -89,16 +97,41 @@ class InterfazUsuario:
             self._FrameSearch.grid(row=0,column=1)
             self._FrameData.grid(row=1,column=0,columnspan=2)
 
-            self._incompleteseries , self._incompletemovies = Get_videos_no_finalizados(id_perfil,self._conexion)
-            
-            MenuWidgets = ( Label(self._FrameMpage,text="Continuar Series:"),
-                            Listbox(self._FrameMpage,StringVar(self._incompleteseries),height=5)
-                            )
-            MenuWidgets[0].grid(row=0,column=0)
-            MenuWidgets[1].grid(row=1,column=0)
+            #self._incompleteseries , self._incompletemovies = Get_videos_no_finalizados(id_perfil,self._conexion)
+            self._incompleteseries = ["Dexter","Breaking Bad","Floricienta","Masha y el Oso","Vikingos","Afuera"]
+            self._incompletemovies = ["Matrix","Frozen","Sonic","Minecraft","Esperando la carroza","Afuera"]
 
+            #Widgets del menú principal
+            self.MenuWidgets =( Label(self._FrameMpage,font=("Arial",20,"bold"),text="Continuar Series:"),
+                                Listbox(self._FrameMpage,font=("Arial",20,"bold"),height=5),
+                                Label(self._FrameMpage,font=("Arial",20,"bold"),text="Continuar Peliculas: "),
+                                Listbox(self._FrameMpage,font=("Arial",20,"bold"),height=5),
+                            )
+
+            for i in range(5):
+                self.MenuWidgets[1].insert(i,self._incompleteseries[i])
+                self.MenuWidgets[3].insert(i,self._incompletemovies[i])
+            
+            self.MenuWidgets[0].grid(row=0,column=0)
+            self.MenuWidgets[1].grid(row=1,column=0)
+            self.MenuWidgets[2].grid(row=2,column=0)
+            self.MenuWidgets[3].grid(row=3,column=0)
+            
+            #Widgets del menú de busqueda
+            self.SearchWidgets = (  
+                                    Entry(self._FrameSearch,font=("Arial",20)),
+                                    Button(self._FrameSearch,font=("Arial",20,"bold"),text="〇",command=self.search),
+                                    Listbox(self._FrameSearch,font=("Arial",20))
+                                  )
+                             
+            self.SearchWidgets[0].grid(row=0,column=0)
+            self.SearchWidgets[1].grid(row=0,column=1)
+            self.SearchWidgets[2].grid(row=1,column=0)
 
             self._PFrame.pack()
             
         print(id_perfil)
-
+    
+    def search():
+        self.SearchWidgets[3].insert(1,"pepe")
+        return None
