@@ -15,19 +15,20 @@ class InterfazUsuario:
     def __init__(self,conexion):
         #Ventana principal
         self._VentanaRaiz   = Tk()
-        self._VentanaRaiz.geometry("800x600")
+        self._VentanaRaiz.geometry("1280x720")
         #Datos a usar
         self._incompleteseries = []
         self._incompletemovies = []
+        self.Searched = {}  
         self._currentProfile = None
         self._esinfante = None
         #Frames a usar
         self._FrameLogin    = Frame()
         self._FrameUselect  = Frame()
         self._PFrame        = Frame()   #Frame Padre a la UI del servicio
-        self._FrameSearch   = LabelFrame(self._PFrame,width=400,height=300,relief="sunken",font=("Arial",30,"bold"),text="Busqueda")
-        self._FrameMpage    = LabelFrame(self._PFrame,width=400,height=300,relief="solid" ,font=("Arial",30,"bold"),text="Inicio")
-        self._FrameData     = LabelFrame(self._PFrame,width=800,height=300,relief="sunken",font=("Arial",30,"bold"),text="Detalles")
+        self._FrameSearch   = LabelFrame(self._PFrame,width=640,height=400,relief="sunken",font=("Arial",30,"bold"),text="Busqueda")
+        self._FrameMpage    = LabelFrame(self._PFrame,width=640,height=400,relief="solid" ,font=("Arial",30,"bold"),text="Inicio")
+        self._FrameData     = LabelFrame(self._PFrame,width=1280,height=320,relief="sunken",font=("Arial",30,"bold"),text="Detalles")
         #la conexion
         self._conexion      = conexion
         #widgets
@@ -43,7 +44,8 @@ class InterfazUsuario:
         self.UselectWidget = ()
         self.MenuWidgets = ()
         self.SearchWidgets = ()
-
+                              
+                              
     def startgui(self):
         self._logwidgets[0].grid(row=0,column=0)
         self._logwidgets[1].grid(row=1,column=0)
@@ -97,21 +99,23 @@ class InterfazUsuario:
             self._FrameSearch.grid(row=0,column=1)
             self._FrameData.grid(row=1,column=0,columnspan=2)
 
-            #self._incompleteseries , self._incompletemovies = Get_videos_no_finalizados(id_perfil,self._conexion)
-            self._incompleteseries = ["Dexter","Breaking Bad","Floricienta","Masha y el Oso","Vikingos","Afuera"]
-            self._incompletemovies = ["Matrix","Frozen","Sonic","Minecraft","Esperando la carroza","Afuera"]
+            self._incompleteseries , self._incompletemovies = Get_videos_no_finalizados(id_perfil,self._conexion)
 
             #Widgets del menú principal
             self.MenuWidgets =( Label(self._FrameMpage,font=("Arial",20,"bold"),text="Continuar Series:"),
-                                Listbox(self._FrameMpage,font=("Arial",20,"bold"),height=5),
+                                Listbox(self._FrameMpage,font=("Arial",15),height=5),
                                 Label(self._FrameMpage,font=("Arial",20,"bold"),text="Continuar Peliculas: "),
-                                Listbox(self._FrameMpage,font=("Arial",20,"bold"),height=5),
+                                Listbox(self._FrameMpage,font=("Arial",15),height=5),
                             )
-
+            print(self._incompleteseries)
+            print(self._incompletemovies)
             for i in range(5):
-                self.MenuWidgets[1].insert(i,self._incompleteseries[i])
-                self.MenuWidgets[3].insert(i,self._incompletemovies[i])
-            
+
+                try: self.MenuWidgets[1].insert(i,self._incompleteseries[0][i])
+                except IndexError: pass
+                try: self.MenuWidgets[3].insert(i,self._incompletemovies[0][i])
+                except IndexError: pass
+
             self.MenuWidgets[0].grid(row=0,column=0)
             self.MenuWidgets[1].grid(row=1,column=0)
             self.MenuWidgets[2].grid(row=2,column=0)
@@ -121,17 +125,25 @@ class InterfazUsuario:
             self.SearchWidgets = (  
                                     Entry(self._FrameSearch,font=("Arial",20)),
                                     Button(self._FrameSearch,font=("Arial",20,"bold"),text="〇",command=self.search),
-                                    Listbox(self._FrameSearch,font=("Arial",20))
+                                    Listbox(self._FrameSearch,font=("Arial",20),yscrollcommand=True),
+                                    Scrollbar(self._FrameSearch,orient="vertical")
                                   )
                              
             self.SearchWidgets[0].grid(row=0,column=0)
             self.SearchWidgets[1].grid(row=0,column=1)
             self.SearchWidgets[2].grid(row=1,column=0)
+            self.SearchWidgets[3].grid(row=1,column=1)
+            self.SearchWidgets[2].config(yscrollcommand=self.SearchWidgets[3].set)
+            self.SearchWidgets[3].config(command=self.SearchWidgets[2].yview)
 
             self._PFrame.pack()
+        return None
             
-        print(id_perfil)
     
-    def search():
-        self.SearchWidgets[3].insert(1,"pepe")
+    def search(self):
+        self.SearchWidgets[2].delete(0,END)
+        self.Searched = searchtitles(self.SearchWidgets[0].get(),self._conexion,self._esinfante)
+        for k,v in self.Searched.items():
+            try: self.SearchWidgets[2].insert(1,"["+k+"]"+"["+str(v[0][0])+"]"+"-"+abouttitle(v[0][0],self._conexion)["title"])
+            except IndexError: pass
         return None
