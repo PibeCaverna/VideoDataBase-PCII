@@ -32,7 +32,7 @@ def abouttitle(id,conexion,tipo="g",infante = 0):
     '''
     filtroinfantil = ""
     if infante == 1: filtroinfantil = " AND atp = 1"
-    if tipo == "p":
+    if tipo == "m":
         query = '''
                 SELECT nombre_video, descripcion_video, nombre_saga, descripcion_saga 
                 FROM Videos  NATURAL JOIN Peliculas NATURAL JOIN Sagas
@@ -93,7 +93,7 @@ def creditos(id,conexion,tipo = "g"):
     salida["Productores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista)
     '''
     creditosretorno = {}
-    if tipo in ["g","p","c"]:
+    if tipo in ["g","m","c"]:
         query = '''
                 SELECT rol, nombre_artista, apellido_artista, pseudonimo_artista, nombre_personaje
                 FROM Creditos NATURAL JOIN Artistas
