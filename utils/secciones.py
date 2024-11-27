@@ -1,9 +1,13 @@
 
 
 def Sections(id_profile,conexion):
-    pelis_no_terminadas, series_no_terminadas =  Get_videos_no_finalizados(id_profile,conexion)
+    pelis_no_terminadas, series_no_terminadas = Get_videos_no_finalizados(id_profile, conexion)
 
-    return get_pelis_name(pelis_no_terminadas, conexion), series_no_terminadas(id_series, conexion)
+    # Obtener nombres de películas y series con el formato "[id]-nombre"
+    pelis_formateadas = [f"{id_peli}-{get_pelis_name([id_peli], conexion)[0]}" for id_peli in pelis_no_terminadas]
+    series_formateadas = [f"{id_serie}-{get_series_name([id_serie], conexion)[0]}" for id_serie in series_no_terminadas]
+
+    return pelis_formateadas, series_formateadas
 
 
 
@@ -21,7 +25,7 @@ def Get_videos_no_finalizados(id_profile,conexion):
     consulta_serie_por_terminar = """Select Distinct S.id_serie
                   From Videos V, Perfiles Pe, Capitulos C, Progresos Pr, Series S  
                   Where %s = Pr.id_perfil and Pr.id_video = V.id_video and V.id_video = C.id_video and C.id_serie = S.id_serie"""
-    #devuelve el progreso del ultimo capitulo de una serie
+    #devuelve el progreso del ultimo capitulo de una serie dada
     consulta_ultimo_cap = """Select Pr.progreso 
                             From Videos V, Perfiles Pe, Capitulos C, Progresos Pr, Series S  
                             Where %s = Pr.id_perfil and Pr.id_video = V.id_video and V.id_video = C.id_video and C.id_serie = S.id_serie and C.id_serie = %s
@@ -53,7 +57,7 @@ def Get_videos_no_finalizados(id_profile,conexion):
         return (pelis, caps + series_por_terminar)
 
 
-def get_pelis_name(id_pelis, conexion):
+def get_pelis_name(id_pelis, conexion):#devuelve una lista con el nombre de todas las palis dentro de id_pelis
 
     consulta = """Select nombre_video
                   From Videos 
@@ -63,11 +67,11 @@ def get_pelis_name(id_pelis, conexion):
     names = []
     with conexion.cursor() as cursor:
         for peli in id_pelis:
-           cursor.execute(consulta , (peli,))
+           cursor.execute(consulta , peli)
            names.append(cursor.fetchall())
     return names
 
-def get_series_name(id_series, conexion):
+def get_series_name(id_series, conexion):#devuelve una lista con el nombre de todas las series dentro de id_series
 
     consulta = """SELECT nombre_serie
                   FROM  Series 
@@ -77,7 +81,7 @@ def get_series_name(id_series, conexion):
     names = []
     with conexion.cursor() as cursor:
         for serie in id_series:
-           cursor.execute(consulta , (serie,))
+           cursor.execute(consulta , serie)
            names.append(cursor.fetchall())
     return names
 
