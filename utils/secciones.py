@@ -4,8 +4,8 @@ def Sections(id_profile,conexion):
     pelis_no_terminadas, series_no_terminadas = Get_videos_no_finalizados(id_profile, conexion)
 
     # Obtener nombres de películas y series con el formato "[id]-nombre"
-    pelis_formateadas = [f"{id_peli}-{get_pelis_name([id_peli], conexion)[0]}" for id_peli in pelis_no_terminadas]
-    series_formateadas = [f"{id_serie}-{get_series_name([id_serie], conexion)[0]}" for id_serie in series_no_terminadas]
+    pelis_formateadas = [f"[{id_peli}]-{get_pelis_name([id_peli], conexion)[0]}" for id_peli in pelis_no_terminadas]
+    series_formateadas = [f"[{id_serie}]-{get_series_name([id_serie], conexion)[0]}" for id_serie in series_no_terminadas]
 
     return pelis_formateadas, series_formateadas
 
