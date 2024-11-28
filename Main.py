@@ -18,6 +18,11 @@ print("conectando...")
 try: conexion = mysql.connector.connect(**DBCREDENTIALS)
 except DatabaseError: Dberror = True
 
+
 if Dberror == False:
     GUI = InterfazUsuario(conexion)
     GUI.startgui()
+
+
+
+
