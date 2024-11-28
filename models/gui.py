@@ -147,22 +147,29 @@ class InterfazUsuario:
             self.MenuWidgets[3].event_generate("<<ListboxSelect>>")
             self.MenuWidgets[5].event_generate("<<ListboxSelect>>")
             self.SearchWidgets[2].event_generate("<<ListboxSelect>>")
-            self.MenuWidgets[1].bind("<<ListboxSelect>>",self.miseriedata())
-            self.MenuWidgets[3].bind("<<ListboxSelect>>",self.mipelidata())
-            self.MenuWidgets[5].bind("<<ListboxSelect>>",self.newdata())
-            self.SearchWidgets[2].bind("<<ListboxSelect>>",self.searchdata())
+            self.MenuWidgets[1].bind("<<ListboxSelect>>",self.miseriedata)
+            self.MenuWidgets[3].bind("<<ListboxSelect>>",self.mipelidata)
+            self.MenuWidgets[5].bind("<<ListboxSelect>>",self.newdata)
+            self.SearchWidgets[2].bind("<<ListboxSelect>>",self.searchdata)
 
 
 
             self._PFrame.pack()
         return None
-    def miseriedata(self):
+    def miseriedata(self, objeto):
         print("seriedata")
-    def mipelidata(self):
+    def mipelidata(self, objeto):
         print("pelidata")
-    def newdata(self):
-        return get_producciones_recientes(self._conexion)
-    def searchdata(self):
+    def newdata(self, evento):
+        print (get_producciones_recientes(self._conexion))
+        pelis, series = get_producciones_recientes(self._conexion)
+        for p in pelis:
+            self.MenuWidgets[5].insert(END, p[1])    #inserto el nombre
+
+        for s in series:
+            self.MenuWidgets[5].insert(END, s[1])    #inserto el nombre
+        
+    def searchdata(self, objeto):
         print("searchdata")
             
     
