@@ -9,7 +9,7 @@ from utils.querymakers import creditos              #Función para buscar los cr
 from utils.sign_in import Autentification
 from utils.sign_in import fetchprofiles
 from utils.secciones import Sections
-from utils.nuevos_estrenos import get_producciones_receintes
+from utils.nuevos_estrenos import get_producciones_recientes
 
 class InterfazUsuario:
     def __init__(self,conexion):
@@ -156,13 +156,20 @@ class InterfazUsuario:
 
             self._PFrame.pack()
         return None
-    def miseriedata(self):
+    def miseriedata(self, objeto):
         print("seriedata")
-    def mipelidata(self):
+    def mipelidata(self, objeto):
         print("pelidata")
-    def newdata(self):
-        print("newdata")
-    def searchdata(self):
+    def newdata(self, evento):
+        print (get_producciones_recientes(self._conexion))
+        pelis, series = get_producciones_recientes(self._conexion)
+        for p in pelis:
+            self.MenuWidgets[5].insert(END, p[1])    #inserto el nombre
+
+        for s in series:
+            self.MenuWidgets[5].insert(END, s[1])    #inserto el nombre
+        
+    def searchdata(self, objeto):
         print("searchdata")
             
     
