@@ -112,9 +112,9 @@ class InterfazUsuario:
                             )
             for i in range(5):
 
-                try: self.MenuWidgets[1].insert(1,self._incompleteseries[0][i])
+                try: self.MenuWidgets[1].insert(1,self._incompleteseries[i])
                 except IndexError: pass
-                try: self.MenuWidgets[3].insert(1,self._incompletemovies[0][i])
+                try: self.MenuWidgets[3].insert(1,self._incompletemovies[i])
                 except IndexError: pass
             for T in perec:
                 self.MenuWidgets[5].insert(0,"[m]"+"["+str(T[0])+"]-"+T[1])
@@ -156,32 +156,34 @@ class InterfazUsuario:
 
             self._PFrame.pack()
         return None
+
     def miseriedata(self, evento):
-        print("seriedata")
-        pelis, series = Sections(self._currentProfile,self._conexion)
-        print(series)
-        for s in series:
-            print(s)
-            self.MenuWidgets[1].insert(END, s[0][0])
+        Cadena = self.MenuWidgets[1].get(evento.widget.curselection()[0])
+        Lista = Cadena.split("-")
+        Lista = Lista[0]
+        Cadena = Lista[1:-1]
+        self.MoreData(int(Cadena))
 
     def mipelidata(self, evento):
-        print("pelidata")
-        pelis, series = Sections(self._currentProfile,self._conexion)
-        print(pelis)
-        for p in pelis:
-            self.MenuWidgets[1].insert(END, p[0][0])
+        Cadena = self.MenuWidgets[3].get(evento.widget.curselection()[0])
+        Lista = Cadena.split("-")
+        Lista = Lista[0]
+        Cadena = Lista[1:-1]
+        self.MoreData(int(Cadena))
 
     def newdata(self, evento):
-        # print (get_producciones_recientes(self._conexion))
-        pelis, series = get_producciones_recientes(self._conexion)
-        for p in pelis:
-            self.MenuWidgets[5].insert(END, p[1])    #inserto el nombre
-
-        for s in series:
-            self.MenuWidgets[5].insert(END, s[1])    #inserto el nombre
+        Cadena = self.MenuWidgets[5].get(evento.widget.curselection()[0])
+        Lista = Cadena.split("-")
+        Lista = Lista[0]
+        Cadena = Lista[4:-1]
+        self.MoreData(int(Cadena))
         
     def searchdata(self, evento):
-        print("searchdata")
+        Cadena = self.SearchWidgets[2].get(evento.widget.curselection())
+        Lista = Cadena.split("-")
+        Lista = Lista[0]
+        Cadena = Lista[4:-1]
+        self.MoreData(int(Cadena))
             
     
     def search(self):
@@ -207,17 +209,17 @@ class InterfazUsuario:
             dataamostrar = abouttitle(id,self._conexion)
             creditosamostrar = creditos(id,self._conexion) 
 
-            self.DetailWidgets[0].insert(0,dataamostrar["desc"])
-            self.DetailWidgets[0].insert(0,dataamostrar["title"]+"\n")
-            for A in craditosamostrar["Actores"]:
-                self.DetailWidgets[1].insert[0,"    "+A+"\n"]
-            self.DetailWidgets[1].insert(0,"Reparto:\n")
-            for D in craditosamostrar["Directores"]:
-                self.DetailWidgets[2].insert[0,"    "+D+"\n"]
-            self.DetailWidgets[2].insert(0,"Dirección:\n")
-            for P in craditosamostrar["Productores"]:
-                self.DetailWidgets[3].insert[0,"    "+P+"\n"]
-            self.DetailWidgets[1].insert(0,"Producción:\n")
+            self.DetailWidgets[0].insert(END,dataamostrar["title"]+"\n")
+            self.DetailWidgets[0].insert(END,dataamostrar["desc"])
+            self.DetailWidgets[1].insert(END,"Reparto:\n")
+            for A in creditosamostrar["Actores"]:
+                self.DetailWidgets[1].insert(END,"    "+A+"\n")
+            self.DetailWidgets[2].insert(END,"Dirección:\n")
+            for D in creditosamostrar["Directores"]:
+                self.DetailWidgets[2].insert(END,"    "+D+"\n")
+            self.DetailWidgets[3].insert(END,"Producción:\n")
+            for P in creditosamostrar["Productores"]:
+                self.DetailWidgets[3].insert(END,"    "+P+"\n")
             
 
         elif tipo == "m":

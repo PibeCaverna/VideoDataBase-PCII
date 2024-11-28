@@ -92,12 +92,12 @@ def creditos(id,conexion,tipo = "g"):
     salida["Directores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista)
     salida["Productores"][i] = (nombre_artista,apellido_artista,pseudonimo_artista)
     '''
-    creditosretorno = {}
+    creditosretorno = {"Actores":[],"Directores":[],"Productores":[]}
     if tipo in ["g","m","c"]:
         query = '''
                 SELECT rol, nombre_artista, apellido_artista, pseudonimo_artista, nombre_personaje
                 FROM Creditos NATURAL JOIN Artistas
-                WHERE id_video = '''+id+'''
+                WHERE id_video = '''+str(id)+'''
                 GROUP BY rol
                 '''
     elif tipo == "s":
@@ -112,9 +112,12 @@ def creditos(id,conexion,tipo = "g"):
     with conexion.cursor() as cursor:
         cursor.execute(query)
         rawcred = cursor.fetchall()
-    for rol in rawcred():
-        if rol[0][0] == "Actor":
-            creditosretorno[rol[0][0]+"es"] = [persona[1:] for persona in rol]
-        else: creditosretorno[rol[0][0]+"es"] = [persona[1:4] for persona in rol]
+    for rol in rawcred:
+        if "Actor" in rol[0]:
+            creditosretorno["Actores"].append(str(rol[1])+" "+str(rol[3])+" "+str(rol[2])+" as "+str(rol[4]))
+        elif "Director" in rol[0]: 
+            creditosretorno["Directores"].append(str(rol[1])+" "+str(rol[3])+" "+str(rol[2]))
+        else:
+            creditosretorno["Productores"].append(str(rol[1])+" "+str(rol[3])+" "+str(rol[2]))
 
     return creditosretorno
