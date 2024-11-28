@@ -156,12 +156,23 @@ class InterfazUsuario:
 
             self._PFrame.pack()
         return None
-    def miseriedata(self, objeto):
+    def miseriedata(self, evento):
         print("seriedata")
-    def mipelidata(self, objeto):
+        pelis, series = Sections(self._currentProfile,self._conexion)
+        print(series)
+        for s in series:
+            print(s)
+            self.MenuWidgets[1].insert(END, s[0][0])
+
+    def mipelidata(self, evento):
         print("pelidata")
+        pelis, series = Sections(self._currentProfile,self._conexion)
+        print(pelis)
+        for p in pelis:
+            self.MenuWidgets[1].insert(END, p[0][0])
+
     def newdata(self, evento):
-        print (get_producciones_recientes(self._conexion))
+        # print (get_producciones_recientes(self._conexion))
         pelis, series = get_producciones_recientes(self._conexion)
         for p in pelis:
             self.MenuWidgets[5].insert(END, p[1])    #inserto el nombre
@@ -169,7 +180,7 @@ class InterfazUsuario:
         for s in series:
             self.MenuWidgets[5].insert(END, s[1])    #inserto el nombre
         
-    def searchdata(self, objeto):
+    def searchdata(self, evento):
         print("searchdata")
             
     
