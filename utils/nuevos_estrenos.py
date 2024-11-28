@@ -1,6 +1,6 @@
 #Devuelve las series que y peliculas que fueron agregadas hace menos de 15 dias
 #Toma 5 de cada una, luego se decide cuales se muestran
-def get_producciones_receintes(conexion):
+def get_producciones_recientes(conexion):
     pelis = get_pelis_recientes(conexion)
     series = get_series_recientes(conexion)
 
@@ -18,7 +18,8 @@ def get_pelis_recientes(conexion):
 
     with conexion.cursor() as cursor:
         cursor.execute(consulta)
-    return cursor.fetchall()
+        resultado = cursor.fetchall()
+    return resultado
 
 #devuelve las series que fueron agregadas hace menos de 15 dias
 def get_series_recientes(conexion):
@@ -32,4 +33,5 @@ def get_series_recientes(conexion):
 
     with conexion.cursor() as cursor:
         cursor.execute(consulta)
-    return cursor.fetchall()
+        resultado = cursor.fetchall()
+    return resultado

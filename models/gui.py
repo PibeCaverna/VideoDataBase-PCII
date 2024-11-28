@@ -9,7 +9,7 @@ from utils.querymakers import creditos              #Función para buscar los cr
 from utils.sign_in import Autentification
 from utils.sign_in import fetchprofiles
 from utils.secciones import Sections
-from utils.nuevos_estrenos import get_producciones_receintes
+from utils.nuevos_estrenos import get_producciones_recientes
 
 class InterfazUsuario:
     def __init__(self,conexion):
@@ -147,10 +147,10 @@ class InterfazUsuario:
             self.MenuWidgets[3].event_generate("<<ListboxSelect>>")
             self.MenuWidgets[5].event_generate("<<ListboxSelect>>")
             self.SearchWidgets[2].event_generate("<<ListboxSelect>>")
-            self.MenuWidgets[1].bind("<<ListboxSelect>>",self.miseriedata)
-            self.MenuWidgets[3].bind("<<ListboxSelect>>",self.mipelidata)
-            self.MenuWidgets[5].bind("<<ListboxSelect>>",self.newdata)
-            self.SearchWidgets[2].bind("<<ListboxSelect>>",self.searchdata)
+            self.MenuWidgets[1].bind("<<ListboxSelect>>",self.miseriedata())
+            self.MenuWidgets[3].bind("<<ListboxSelect>>",self.mipelidata())
+            self.MenuWidgets[5].bind("<<ListboxSelect>>",self.newdata())
+            self.SearchWidgets[2].bind("<<ListboxSelect>>",self.searchdata())
 
 
 
@@ -161,7 +161,7 @@ class InterfazUsuario:
     def mipelidata(self):
         print("pelidata")
     def newdata(self):
-        print("newdata")
+        return get_producciones_recientes(self._conexion)
     def searchdata(self):
         print("searchdata")
             
